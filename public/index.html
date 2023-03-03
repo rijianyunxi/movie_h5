@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="" class="dart">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+        .dart{
+            --bg:#0D0D0D;
+            --cl:#FFFFFF;
+        }
+        .light{
+            --bg:#FFFFFF;
+            --cl:#000000
+        }
+      html,body{
+        height: 100%;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <script>
+     function e(){
+        var e = document.documentElement.clientWidth;
+        let t = document.querySelector('html');
+        let f = ( e > 750 ? 750 : e) / 75;
+        t.style.fontSize = f + 'px';
+    }
+    e();
+     window.addEventListener('resize',e);
+    </script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>-->
   </body>
 </html>
