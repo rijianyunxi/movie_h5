@@ -80,7 +80,7 @@ export default {
         this.$router.push({
           path:"/detail",
           query:item
-        })
+        },)
       }
     }
   }

@@ -1,9 +1,9 @@
 <template>
   <div class="video-play" :class="{ 'video-bg-wrap': !videoId }">
-    <div v-show="showLoading" class="load"> 拼命加载中...</div>
-    <video controls v-show="!error && !showLoading" :id="videoId" autoplay="" playsinline="true" webkit-playsinline="true" x5-playsinline="true" tabindex="2" mediatype="video" ></video>
+<!--    <video controls :id="videoId" autoplay="true" playsinline="true" webkit-playsinline="true" x5-playsinline="true" tabindex="2" mediatype="video" ></video>-->
 
-<!--    <video controls v-show="!error && !showLoading" :id="videoId" autoplay muted></video>-->
+    <div v-show="showLoading" class="load"> 拼命加载中...</div>
+    <video controls v-show="!error && !showLoading" :id="videoId" autoplay="true" playsinline="true" webkit-playsinline="true" x5-playsinline="true" tabindex="2" mediatype="video" ></video>
     <div @click="rePlay" v-show="error" class="error">资源加载失败,<span>点击重新加载</span></div>
   </div>
 </template>
@@ -61,27 +61,23 @@ export default {
           this.showLoading = false;
         });
         this.hls.on(Hls.Events.ERROR, (event, data) => {
-          console.log("MANIFEST_ERROR", id, url, event, data);
-          this.showLoading = false;
-          this.error = true;
-          this.hls.stopLoad();
+
           if (data.fatal) {
-            // this.destroyVideo(()=>{
-            //   setTimeout(()=>{
-            //     this.playVideo(this.videoId, this.videoUrl);
-            //   },1500)
-            // })
-            // switch (data.type) {
-            //   case Hls.ErrorTypes.NETWORK_ERROR:
-            //     //
-            //     break;
-            //   case Hls.ErrorTypes.MEDIA_ERROR:
-            //     //
-            //     break;
-            //   default:
-            //     this.hls.destroy()
-            //     break;
-            // }
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                console.log('fatal network error encountered, try to recover');
+                this.hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                console.log('fatal media error encountered, try to recover');
+                this.hls.recoverMediaError();
+                break;
+              default:
+                this.showLoading = false;
+                this.error = true;
+                this.hls.stopLoad();
+                break;
+            }
           }
         });
       }

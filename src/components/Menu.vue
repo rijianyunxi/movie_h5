@@ -84,7 +84,7 @@ export default {
         }
         span{
             flex-shrink: 0;
-            width: 12.5rem;
+            min-width: 12.5rem;
             font-size: 3rem;
             line-height: 10rem;
             text-align: center;

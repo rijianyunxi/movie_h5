@@ -2,11 +2,11 @@
   <div class="detail">
     <Back :title="title"></Back>
     <div style="height: 8.4rem"></div>
-<!--    <video controls ref="video" id="video" class="veideo_box"></video>-->
-    <Player :videoUrl="videoUrl" video-id="hlsPlayer"></Player>
+<!--    <Player :videoUrl="videoUrl" video-id="hlsPlayer"></Player>-->
+    <VideoJs :url="videoUrl" :poster="coverUrl"></VideoJs>
     <div class="_title">{{ title }}</div>
     <Title @showMore="showMore" :title="plate"></Title>
-    <Movie @play="palyCurrent" replace ref="movie" @refresh="refresh" @load="loadMore" scroll :list="list"></Movie>
+    <Movie @play="palyCurrent" :replace="true" ref="movie" @refresh="refresh" @load="loadMore" scroll :list="list"></Movie>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ import Back from "@/components/Back.vue";
 import Title from "@/components/Title.vue";
 import Movie from "@/components/Movie.vue";
 import Player from "@/components/Player.vue";
+import VideoJs from "@/components/VideoJs";
 
 export default {
   name: "detail",
@@ -22,20 +23,25 @@ export default {
     Back,
     Movie,
     Title,
-    Player
+    Player,
+    VideoJs
   },
   created() {
-    let { videoName,plate,videoUrl } = this.$route.query;
+    let { videoName,plate,videoUrl, coverUrl } = this.$route.query;
     this.plate = plate;
     this.title = videoName || "";
+    this.coverUrl = coverUrl;
+    this.setTitle();
     this.videoUrl = videoUrl;
-    // this.videoUrl = "https://new.qqaku.com/20220721/I3Qto3BT/index.m3u8"
     this.getList()
+  },
+  beforeDestroy() {
+    this.setTitle()
   },
   data() {
     return {
       videoUrl:"",
-      hls:null,
+      coverUrl:"",
       title: "",
       plate:"",
       list: [],
@@ -43,10 +49,22 @@ export default {
     };
   },
   methods: {
+    setTitle(){
+      document.title = this.title
+    },
     palyCurrent(item){
-      let {videoName,videoUrl} = item;
-      this.title = videoName;
-      this.videoUrl = videoUrl
+      // let {videoName,videoUrl,coverUrl} = item;
+      // this.title = videoName;
+      // this.setTitle();
+      // this.videoUrl = videoUrl;
+      // this.coverUrl = coverUrl;
+
+
+      this.$router.replace({
+        path:"/tmp",
+        query:item
+      });
+      // window.location.reload()
     },
     getList(cb){
       this.API.videoInPlateList(this.plate,this.page).then(res=>{
@@ -75,23 +93,6 @@ export default {
           this.$refs.movie.refreshing = false;
         })
       })
-    },
-    init() {
-      const video = this.$refs.video;
-      var videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
-      if (Hls.isSupported()) {
-        this.hls = new Hls();
-        this.hls.loadSource(videoSrc);
-        this.hls.attachMedia(video);
-        this.hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          video.play();
-          console.log("start play");
-        });
-        
-        // this.hls.on(Hls.Events.ERROR, function (err) {
-        //     Notify({ type: 'danger', message: '视频播放失败，请重试' });
-        // });
-      }
     },
     showMore() {
       this.$router.push({
