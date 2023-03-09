@@ -14,7 +14,7 @@
 import Back from "@/components/Back.vue";
 import Title from "@/components/Title.vue";
 import Movie from "@/components/Movie.vue";
-import Player from "@/components/Player.vue";
+// import Player from "@/components/Player.vue";
 import VideoJs from "@/components/VideoJs";
 
 export default {
@@ -23,7 +23,7 @@ export default {
     Back,
     Movie,
     Title,
-    Player,
+    // Player,
     VideoJs
   },
   created() {
