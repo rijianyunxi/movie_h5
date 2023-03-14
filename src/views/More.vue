@@ -1,7 +1,7 @@
 <template>
   <div class="more">
         <Back :title="plate"></Back>
-        <Movie ref="movie" @refresh="refresh" @load="loadMore" scroll :list="list"></Movie>
+        <Movie ref="movie" @refresh="refresh" @load="loadMore" :firstLoad="firstLoad" scroll :list="list"></Movie>
   </div>
 </template>
 
@@ -25,11 +25,13 @@ export default {
           plate:"",
             list:[],
             page:0,
+            firstLoad:true,
         }
     },
   methods:{
       getList(cb){
         this.API.videoInPlateList(this.plate,this.page).then(res=>{
+          this.firstLoad = false;
           this.list = [...this.list,...res.data.content];
           if(res.data.content.length < 20){
             this.$nextTick(()=>{
@@ -81,6 +83,5 @@ export default {
         background: var(--bg);
         overflow-x: hidden;
         overflow-y: auto;
-        padding-top: 8rem;
     }
 </style>

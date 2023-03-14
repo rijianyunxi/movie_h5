@@ -71,12 +71,12 @@ export default {
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
-  padding-top: 15rem;
+  //padding-top: 15rem;
   overflow-x: hidden;
   overflow-y: auto;
-  &::-webkit-scrollbar{
-    display: none;
-  }
+  //&::-webkit-scrollbar{
+  //  display: none;
+  //}
   ::v-deep .title{
     width: 97%;
     margin: 3rem 1.5% .5rem 1.5%;

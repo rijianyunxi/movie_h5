@@ -23,7 +23,7 @@ export default {
     z-index: 9;
     height: 8rem;
     box-sizing: border-box;
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     .content{

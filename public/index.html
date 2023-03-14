@@ -12,6 +12,9 @@
       <!-- Fantasy -->
 <!--      <link href="https://unpkg.com/@videojs/themes@1/dist/fantasy/index.css" rel="stylesheet">-->
       <style>
+          ::-webkit-scrollbar{
+              display: none;
+          }
         .dart{
             --bg:#0D0D0D;
             --cl:#FFFFFF;
@@ -23,6 +26,14 @@
       html,body{
         height: 100%;
         width: 100%;
+      background-color: var(--bg);
+      }
+      @media screen and (min-width: 1100px){
+          #app{
+              width: 1100px;
+              overflow: hidden;
+              margin:0 auto!important;
+          }
       }
     </style>
   </head>

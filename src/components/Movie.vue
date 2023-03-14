@@ -29,7 +29,8 @@
 
       </van-list>
     </van-pull-refresh>
-    <van-empty v-if="list.length === 0" image="search" description="无数据" />
+    <van-empty v-if="list.length === 0 && firstLoad" image="search" description="正在获取数据..." />
+    <van-empty v-if="list.length === 0 && !firstLoad" image="search" description="无数据" />
   </div>
 </template>
 
@@ -49,6 +50,10 @@ export default {
     replace:{
       type:Boolean,
       default: ()=>false
+    },
+    firstLoad:{
+      type:Boolean,
+      default: ()=>true
     }
   },
   data(){

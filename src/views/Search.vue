@@ -13,7 +13,6 @@
         />
       </form>
     </div>
-    <div style="height:9rem"></div>
     <div v-if="value.length === 0" class="top10">
         <li @click="dealClick(item)" v-for="(item,index) in top10List" :key="index">
           <span :class="{hot: index <= 2}">{{index + 1}}.</span>
@@ -140,7 +139,7 @@ export default {
   }
   .form {
     width: 100%;
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     z-index: 99;
