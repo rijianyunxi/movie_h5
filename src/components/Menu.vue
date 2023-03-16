@@ -21,6 +21,7 @@ export default {
     }
   },
   created(){
+    if(this.list.length > 0 && this.current) return false;
     let _symbol = sessionStorage.getItem("_symbol") || '';
     this.API.getClass().then(res=>{
         if(res.data.content.length > 0 ){
